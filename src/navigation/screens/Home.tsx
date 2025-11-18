@@ -1,30 +1,37 @@
 import { Text } from '@react-navigation/elements';
 import { useNavigation } from '@react-navigation/native';
 import { FlatList, Pressable, StyleSheet, View } from 'react-native';
-import { useContext } from 'react';
+import { memo, useCallback, useContext } from 'react';
 import { AppContext } from '../../context/AppContext';
 import { PayslipItem } from '../../types/PayslipTypes';
 
+const PayslipCard = memo(({ item, onPress }: { item: PayslipItem; onPress: (item: PayslipItem) => void }) => (
+  <Pressable
+    onPress={() => onPress(item)}
+    style={({ pressed }) => [
+      styles.card,
+      pressed && styles.cardPressed,
+    ]}
+  >
+    <Text style={styles.cardTitle}>{item.name}</Text>
+    <View style={styles.cardContent}>
+      <Text style={styles.cardText}>From: {item.fromDate}</Text>
+      <Text style={styles.cardText}>To: {item.toDate}</Text>
+    </View>
+  </Pressable>
+));
+
 export function Home() {
   const navigation = useNavigation();
-    const { payslips } = useContext(AppContext);
+  const { payslips } = useContext(AppContext);
 
+  const handleCardPress = useCallback((item: PayslipItem) => {
+    navigation.navigate('Payslip', item);
+  }, [navigation]);
 
-  const renderCard = ({ item }: { item: PayslipItem }) => (
-    <Pressable
-      onPress={() => navigation.navigate('Payslip', item)}
-      style={({ pressed }) => [
-        styles.card,
-        pressed && styles.cardPressed,
-      ]}
-    >
-      <Text style={styles.cardTitle}>{item.name}</Text>
-      <View style={styles.cardContent}>
-        <Text style={styles.cardText}>From: {item.fromDate}</Text>
-        <Text style={styles.cardText}>To: {item.toDate}</Text>
-      </View>
-    </Pressable>
-  );
+  const renderCard = useCallback(({ item }: { item: PayslipItem }) => (
+    <PayslipCard item={item} onPress={handleCardPress} />
+  ), [handleCardPress]);
 
   return (
     <View style={styles.container}>
@@ -34,6 +41,8 @@ export function Home() {
         renderItem={renderCard}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.listContent}
+        initialNumToRender={10}
+        windowSize={5}
       />
     </View>
   );
@@ -43,6 +52,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
+    paddingTop: 40,
   },
   header: {
     fontSize: 24,

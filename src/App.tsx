@@ -5,6 +5,7 @@ import { createURL } from 'expo-linking';
 import * as SplashScreen from 'expo-splash-screen';
 import * as React from 'react';
 import { useColorScheme } from 'react-native';
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Navigation } from './navigation';
 import { AppContextProvider } from './context/AppContext';
 
@@ -22,17 +23,19 @@ export function App() {
   const theme = colorScheme === 'dark' ? DarkTheme : DefaultTheme
 
   return (
-    <AppContextProvider>
-      <Navigation
-        theme={theme}
-        linking={{
-          enabled: 'auto',
-          prefixes: [prefix],
-        }}
-        onReady={() => {
-          SplashScreen.hideAsync();
-        }}
-      />
-    </AppContextProvider>
+    <SafeAreaProvider>
+      <AppContextProvider>
+        <Navigation
+          theme={theme}
+          linking={{
+            enabled: 'auto',
+            prefixes: [prefix],
+          }}
+          onReady={() => {
+            SplashScreen.hideAsync();
+          }}
+        />
+      </AppContextProvider>
+    </SafeAreaProvider>
   );
 }
