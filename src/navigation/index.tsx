@@ -1,18 +1,18 @@
 import {
   createStaticNavigation,
   StaticParamList,
-} from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Home } from './screens/Home';
-import { Payslip } from './screens/Payslip';
-import { NotFound } from './screens/NotFound';
+} from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Home } from "./screens/Home";
+import { Payslip } from "./screens/Payslip";
+import { NotFound } from "./screens/NotFound";
 
 const RootStack = createNativeStackNavigator({
   screens: {
     HomeTabs: {
       screen: Home,
       options: {
-        title: 'Home',
+        title: "Home",
         headerShown: false,
       },
     },
@@ -22,10 +22,10 @@ const RootStack = createNativeStackNavigator({
     NotFound: {
       screen: NotFound,
       options: {
-        title: '404',
+        title: "404",
       },
       linking: {
-        path: '*',
+        path: "*",
       },
     },
   },

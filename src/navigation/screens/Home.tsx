@@ -5,6 +5,7 @@ import { memo, useCallback, useContext } from "react";
 import moment from "moment";
 import { AppContext } from "../../context/AppContext";
 import { PayslipItem } from "../../types/PayslipTypes";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const PayslipCard = memo(
   ({
@@ -50,7 +51,7 @@ export function Home() {
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.header}>Payslips</Text>
       <FlatList
         data={payslips}
@@ -60,7 +61,7 @@ export function Home() {
         initialNumToRender={10}
         windowSize={5}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -68,7 +69,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5",
-    paddingTop: 40,
   },
   header: {
     fontSize: 24,
