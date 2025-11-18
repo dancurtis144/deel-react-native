@@ -1,15 +1,40 @@
-import { Button, Text } from '@react-navigation/elements';
-import { StyleSheet, View } from 'react-native';
+import { Text } from '@react-navigation/elements';
+import { useNavigation } from '@react-navigation/native';
+import { FlatList, Pressable, StyleSheet, View } from 'react-native';
+import { useContext } from 'react';
+import { AppContext } from '../../context/AppContext';
+import { PayslipItem } from '../../types/PayslipTypes';
 
 export function Home() {
+  const navigation = useNavigation();
+    const { payslips } = useContext(AppContext);
+
+
+  const renderCard = ({ item }: { item: PayslipItem }) => (
+    <Pressable
+      onPress={() => navigation.navigate('Payslip', item)}
+      style={({ pressed }) => [
+        styles.card,
+        pressed && styles.cardPressed,
+      ]}
+    >
+      <Text style={styles.cardTitle}>{item.name}</Text>
+      <View style={styles.cardContent}>
+        <Text style={styles.cardText}>From: {item.fromDate}</Text>
+        <Text style={styles.cardText}>To: {item.toDate}</Text>
+      </View>
+    </Pressable>
+  );
+
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
-      <Text>Open up 'src/App.tsx' to start working on your app!</Text>
-      <Button screen="Profile" params={{ user: 'jane' }}>
-        Go to Profile
-      </Button>
-      <Button screen="Settings">Go to Settings</Button>
+      <Text style={styles.header}>Payslips</Text>
+      <FlatList
+        data={payslips}
+        renderItem={renderCard}
+        keyExtractor={(item) => item.id.toString()}
+        contentContainerStyle={styles.listContent}
+      />
     </View>
   );
 }
@@ -17,8 +42,51 @@ export function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 10,
+    backgroundColor: '#f5f5f5',
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    padding: 16,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+  },
+  listContent: {
+    padding: 16,
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  cardPressed: {
+    opacity: 0.7,
+    transform: [{ scale: 0.98 }],
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 8,
+    color: '#333',
+  },
+  cardContent: {
+    gap: 4,
+  },
+  cardText: {
+    fontSize: 14,
+    color: '#666',
+  },
+  cardFile: {
+    fontSize: 12,
+    color: '#999',
+    marginTop: 4,
+    fontStyle: 'italic',
   },
 });
