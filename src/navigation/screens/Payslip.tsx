@@ -78,12 +78,24 @@ export function Payslip({ route }: Props) {
         )}
       </View>
       <View style={styles.buttonContainer}>
-        <Button title="Download" onPress={onPressDownload} />
+        <Button
+          accessibilityLabel="Download file"
+          title="Download"
+          onPress={onPressDownload}
+        />
         {!showFile && (
-          <Button title="Preview" onPress={() => setShowFile(true)} />
+          <Button
+            accessibilityLabel="Preview file"
+            title="Preview"
+            onPress={() => setShowFile(true)}
+          />
         )}
         {showFile && (
-          <Button title="Close Preview" onPress={() => setShowFile(false)} />
+          <Button
+            accessibilityLabel="Close preview"
+            title="Close Preview"
+            onPress={() => setShowFile(false)}
+          />
         )}
       </View>
       {showFile && isPdf && <PdfRendererView source={file} />}

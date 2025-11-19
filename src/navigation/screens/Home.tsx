@@ -16,6 +16,9 @@ const PayslipCard = memo(
     onPress: (item: PayslipItem) => void;
   }) => (
     <Pressable
+      accessible
+      accessibilityLabel="Press to view payslip details"
+      accessibilityRole="button"
       onPress={() => onPress(item)}
       style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
     >
