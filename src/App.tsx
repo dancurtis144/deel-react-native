@@ -1,26 +1,24 @@
-import { Assets as NavigationAssets } from '@react-navigation/elements';
-import { DarkTheme, DefaultTheme } from '@react-navigation/native';
-import { Asset } from 'expo-asset';
-import { createURL } from 'expo-linking';
-import * as SplashScreen from 'expo-splash-screen';
-import * as React from 'react';
-import { useColorScheme } from 'react-native';
+import { Assets as NavigationAssets } from "@react-navigation/elements";
+import { DarkTheme, DefaultTheme } from "@react-navigation/native";
+import { Asset } from "expo-asset";
+import { createURL } from "expo-linking";
+import * as SplashScreen from "expo-splash-screen";
+import * as React from "react";
+import { useColorScheme } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Navigation } from './navigation';
-import { AppContextProvider } from './context/AppContext';
+import { Navigation } from "./navigation";
+import { AppContextProvider } from "./context/AppContext";
 
-Asset.loadAsync([
-  ...NavigationAssets,
-]);
+Asset.loadAsync([...NavigationAssets]);
 
 SplashScreen.preventAutoHideAsync();
 
-const prefix = createURL('/');
+const prefix = createURL("/");
 
 export function App() {
   const colorScheme = useColorScheme();
 
-  const theme = colorScheme === 'dark' ? DarkTheme : DefaultTheme
+  const theme = colorScheme === "dark" ? DarkTheme : DefaultTheme;
 
   return (
     <SafeAreaProvider>
@@ -28,7 +26,7 @@ export function App() {
         <Navigation
           theme={theme}
           linking={{
-            enabled: 'auto',
+            enabled: "auto",
             prefixes: [prefix],
           }}
           onReady={() => {

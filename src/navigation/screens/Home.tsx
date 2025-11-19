@@ -19,7 +19,7 @@ const PayslipCard = memo(
       onPress={() => onPress(item)}
       style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
     >
-      <Text style={styles.cardTitle}>{item.name}</Text>
+      <Text style={styles.cardTitle}>{item.id}</Text>
       <View style={styles.cardContent}>
         <Text style={styles.cardText}>
           From: {moment(item.fromDate).format("MMMM Do, YYYY")}
